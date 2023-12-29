@@ -6,48 +6,55 @@ class Main:
     def __init__(self):
         self.deck = Deck()
         self.crib = []
-        self.player1_name = input("Enter Player 1's name: ")
-        self.player1 = Player(is_dealer=False, name=self.player1_name)
-        self.player2 = Player(is_dealer=True, name="Computer")
+
+        self.p1_name = input("Enter Player 1's name: ")
+        self.p1 = Player(self.p1_name)
+        self.p2 = Player("Computer")
+
+        p1_cards_played = []
+        p2_cards_played = []
+
+        cards_played = []
+        
 
     def start_game(self):
         print("Welcome to Cribbage!")
         
         random.shuffle(self.deck.cards)
 
-        self.deck.deal([self.player1, self.player2])
+        self.deck.deal([self.p1, self.p2])
 
-        self.display_hands()
+        self.display_hand(self.p1)
         index1 = int(input("Select the number of a card you want to discard. (1 for 1st card in hand, 2 for 2nd, etc.) >> "))
-        index1 -= 1  # Adjust for 0-based indexing
-        self.crib.append(self.player1.hand.cards[index1])
-        self.player1.hand.discard(index1)
-        self.display_hands()
-        print("Crib:", [str(card) for card in self.crib])
+        index1 -= 1 
+        self.crib.append(self.p1.hand.cards[index1])
+        self.p1.hand.discard(index1)
+        self.display_hand(self.p1)
 
         crib_card1 = random.randint(0, 5)
-        self.crib.append(self.player2.hand.cards[crib_card1])
-        self.player2.hand.discard(crib_card1)
-        print("Crib:", [str(card) for card in self.crib])
+        self.crib.append(self.p2.hand.cards[crib_card1])
+        self.p2.hand.discard(crib_card1)
         
         index2 = int(input("Select second card you'd like to discard >> "))
-        index2 -= 1  # Adjust for 0-based indexing
-        self.crib.append(self.player1.hand.cards[index2])
-        self.player1.hand.discard(index2)
-        print("Crib:", [str(card) for card in self.crib])
+        index2 -= 1 
+        self.crib.append(self.p1.hand.cards[index2])
+        self.p1.hand.discard(index2)
 
         crib_card2 = random.randint(0, 4)
-        self.crib.append(self.player2.hand.cards[crib_card2])
-        self.player2.hand.discard(crib_card2)
+        self.crib.append(self.p2.hand.cards[crib_card2])
+        self.p2.hand.discard(crib_card2)
         
-        self.display_hands()
-        # Implement the rest of your game logic here
-        print("Crib:", [str(card) for card in self.crib])
+        self.display_hand(self.p1)
+        self.dealer_round()
+        
 
-    def display_hands(self):
-        for player in [self.player1]:
-            print(f"{player.name}'s Hand:")
-            print(player.hand)
+    def display_hand(self, player):
+        print(f"{player.name}'s Hand:")
+        print(player.hand)
+
+    def dealer_round(self):
+        print("Let's play! You dealt. So Computer goes first...")
+        
 
 if __name__ == "__main__":
     game = Main()

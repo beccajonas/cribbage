@@ -30,8 +30,5 @@ class Deck:
         return self.cards
 
 my_deck = Deck()
-print("Initial deck size:", len(my_deck.cards))
-
-print("Remaining deck size:", len(my_deck.remaining_deck()))
 
 
