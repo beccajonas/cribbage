@@ -4,6 +4,7 @@ import random
 
 class Main:
     def __init__(self):
+        print("Welcome to Cribbage!")
         self.deck = Deck()
         self.crib = []
 
@@ -18,10 +19,7 @@ class Main:
         self.cards_played = []
 
     def start_round(self):
-        print("Welcome to Cribbage!")
-        
-        random.shuffle(self.deck.cards)
-
+        self.deck.shuffle()
         self.deck.deal([self.p1, self.p2])
 
         while len(self.p1.hand.cards) > 0 or len(self.p2.hand.cards) > 0:
