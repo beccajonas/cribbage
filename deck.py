@@ -14,7 +14,13 @@ class Deck:
         deck = []
         for value in self.values:
             for suit in self.suits:
-                card = Card(value, suit)
+                if value == "A":
+                    points = 1
+                elif value in ["J", "Q", "K"]:
+                    points = 10
+                else:
+                    points = value
+                card = Card(value, suit, points)
                 deck.append(card)
         return deck
 

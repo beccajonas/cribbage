@@ -7,7 +7,7 @@ class Main:
     def __init__(self):
         print("Welcome to Cribbage!")
         self.deck = Deck()
-        self.p1 = Player.create_player_with_input()
+        self.p1 = Player.create_player()
         self.p2 = Player("Computer")
         self.state = GameState(self.p1, self.p2)
         self.state.dealer = self.p1
@@ -24,7 +24,7 @@ class Main:
             self.state.computer_discard1(self.p2)
             self.state.discard(self.p1)
             self.state.computer_discard2(self.p2)
-            
+
             self.play_round()
 
         print("Round over! All cards have been played.")

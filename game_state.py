@@ -12,8 +12,7 @@ class GameState:
         self.dealer = p1 if self.dealer == p2 else p2
 
     def discard(self, p1):
-        index1 = int(input("Select the number of a card you want to discard. (1 for 1st card in hand, 2 for 2nd, etc.) >> "))
-        index1 -= 1 
+        index1 = int(input("Select the number of a card you want to discard. (1 for 1st card in hand, 2 for 2nd, etc.) >> ")) - 1
         self.crib.append(p1.hand.cards[index1])
         p1.hand.discard(index1)
         

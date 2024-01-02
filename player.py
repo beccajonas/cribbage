@@ -10,7 +10,7 @@ class Player:
         return self._name
     
     @classmethod
-    def create_player_with_input(cls):
+    def create_player(cls):
         while True:
             name = input("Enter player's name: ")
             if len(name) >= 1:
