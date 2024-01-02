@@ -14,6 +14,5 @@ class Player:
         if len(name) < 1:
             raise ValueError("Please enter a name with at least one character")
         self._name = name
-
-    
+        
 
