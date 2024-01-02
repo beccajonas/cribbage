@@ -7,8 +7,7 @@ class Main:
     def __init__(self):
         print("Welcome to Cribbage!")
         self.deck = Deck()
-        self.p1_name = input("Enter Player 1's name: ")
-        self.p1 = Player(self.p1_name)
+        self.p1 = Player.create_player_with_input()
         self.p2 = Player("Computer")
         self.state = GameState(self.p1, self.p2)
         self.state.dealer = self.p1
@@ -20,24 +19,11 @@ class Main:
 
         while len(self.p1.hand.cards) > 0 or len(self.p2.hand.cards) > 0:
             self.display_hand(self.p1)
-            index1 = int(input("Select the number of a card you want to discard. (1 for 1st card in hand, 2 for 2nd, etc.) >> "))
-            index1 -= 1 
-            self.state.crib.append(self.p1.hand.cards[index1])
-            self.p1.hand.discard(index1)
+            self.state.discard(self.p1)
             self.display_hand(self.p1)
-
-            crib_card1 = random.randint(0, 5)
-            self.state.crib.append(self.p2.hand.cards[crib_card1])
-            self.p2.hand.discard(crib_card1)
-            
-            index2 = int(input("Select second card you'd like to discard >> "))
-            index2 -= 1 
-            self.state.crib.append(self.p1.hand.cards[index2])
-            self.p1.hand.discard(index2)
-
-            crib_card2 = random.randint(0, 4)
-            self.state.crib.append(self.p2.hand.cards[crib_card2])
-            self.p2.hand.discard(crib_card2)
+            self.state.computer_discard1(self.p2)
+            self.state.discard(self.p1)
+            self.state.computer_discard2(self.p2)
             
             self.play_round()
 
@@ -70,7 +56,7 @@ class Main:
 
         self.display_cards_played()
 
-        print(f"{self.p1_name}'s turn! >>" )
+        print(f"{self.p1.name}'s turn! >>" )
         self.display_hand(self.p1)
         p1_index = int(input("Select the number of a card you want to play >> "))
         p1_index -= 1
