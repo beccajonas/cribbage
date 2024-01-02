@@ -5,6 +5,9 @@ class Player:
         self._name = name
         self.hand = Hand()
 
+    def __str__(self):
+        return self.name
+    
     @property
     def name(self):
         return self._name

@@ -15,6 +15,7 @@ class Main:
     def fill_crib(self):
         self.deck.shuffle()
         self.deck.deal([self.p1, self.p2])
+        self.round.display_dealer()
 
         while len(self.p1.hand.cards) > 4 or len(self.p2.hand.cards) > 4:
             self.display_hand(self.p1)
@@ -35,7 +36,6 @@ class Main:
 
     def display_cards_played(self):
         print(f"Cards Played: {', '.join(str(card) for card in self.round.cards_played)}")
-
 
 if __name__ == "__main__":
     game = Main()

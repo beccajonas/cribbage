@@ -53,6 +53,9 @@ class Round:
     def display_cards_played(self):
         print(f"Cards Played: {', '.join(str(card) for card in self.cards_played)}")
 
+    def display_dealer(self):
+        print(f"{self.dealer} is the dealer.")
+
     def get_valid_input(self, p):
         while True:
             input_index_string = input("Select the number of a card you want to play >> ")

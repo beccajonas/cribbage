@@ -18,7 +18,7 @@ class GameState:
 
     def get_valid_input(self, p):
         while True:
-            input_index_string = input("Select the number of a card you want to discard. (1 for 1st card in hand, 2 for 2nd, etc.) >> ")
+            input_index_string = input("Select the number of a card you want to put into crib. (1 for 1st card in hand, 2 for 2nd, etc.) >> ")
             if input_index_string.isdigit():
                 input_index = int(input_index_string) - 1
                 if input_index in range(0, len(p.hand.cards)):
