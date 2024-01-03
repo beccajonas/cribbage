@@ -10,42 +10,21 @@ class Round:
         self.p2_round_points = 0
         self.cards_played = [] #combination of both players cards played
         self.table_points = 0 #can never exceed 31
-        self.go_check = [] #frequency of "Player 1 Go" or frequency of "Player 2 Go" cannot exceed two. When one of them does, it resets
+        self.go_list = [] #frequency of "Player 1 Go" or frequency of "Player 2 Go" cannot exceed two. When one of them does, it resets
 
     def play(self):
-        input("Checking go count (Line 16)")
-        if self.go_check >= 2:
-            input(f"Go count is {self.go_check} (Line 18)")
-            self.reset_round()
-            input(f"Reset round (line 20)")
-            self.go_check = 0
-        input(f"Go count is {self.go_check} (Line 22)")
-
+        self.check_go_list()
         while self.has_cards():
             self.player_turn()
-            
-            input("Checking go count (Line 27)")
-            if self.go_check >= 2:
-                input(f"Go count is {self.go_check} (Line 29)")
-                self.reset_round()
-                input(f"Reset round (line 31)")
-                self.go_check = 0
-            input(f"Go count is {self.go_check} (Line 33)")
-
-            input("-----line 18----------")
+            input("-----line 19----------")
+            self.check_go_list()
+            input("-----line 21----------")
             self.computer_turn()
-
-            input("Checking go count (Line 38)")
-            if self.go_check >= 2:
-                input(f"Go count is {self.go_check} (Line 40)")
-                self.reset_round()
-                input(f"Reset round (line 42)")
-                self.go_check = 0
-            input(f"Go count is {self.go_check} (Line 44)")
-
-            input("-----line 46----------")
+            input("-----line 23----------")
+            self.check_go_list()
+            input("-----line 25----------")
             self.switch_turns()
-            input("-----line 48----------")
+            input("-----line 27----------")
         
         if len(self.p2.hand.cards) == 0 and len(self.p1.hand.cards) == 0:
             input("No cards are left")
@@ -61,7 +40,7 @@ class Round:
 
         if not self.has_valid_card(self.p1) and not self.has_valid_card(self.p2):
             input("No cards are valid")
-            self.reset_round()
+            self.reset_table()
 
     def player_turn(self):
         print(f"{self.p1.name}'s turn!")
@@ -101,8 +80,8 @@ class Round:
                     print("Invalid input. Please enter a valid card position.")        
 
         else:
-            self.go_check += 1
-            print(f"Go check = {self.go_check} (Line 105)")
+            self.go_list.append("Player 1 Go")
+            print(f"Go check = {self.go_list} (Line 105)")
             print(f"{self.p1.name} cannot play. Go! (Line 106)")
 
     def computer_turn(self):
@@ -141,10 +120,18 @@ class Round:
 
         else:
             # If the computer has no valid cards, it says "Go"
-            self.go_check += 1
-            print(f"Go check = {self.go_check} (Line 145)")
+            self.go_list.append("Player 2 Go")
+            print(f"Go check = {self.go_list} (Line 145)")
             print(f"{self.p2.name} cannot play. Go! (Line 146)")
-                
+    
+    def check_go_list(self):
+        print(f"Checking go list | {self.go_list}")
+        for _ in self.go_list:
+            if self.go_list.count("Player 1 Go") == 1 and self.go_list.count("Player 2 Go") == 1:
+                self.reset_table()
+                self.go_list = []
+            else:
+                print("Only one player has said 'Go'. Continue.")
 
     def switch_turns(self):
         if self.turn == self.p1:
@@ -152,8 +139,8 @@ class Round:
         elif self.turn == self.p2:
             self.turn = self.p1
 
-    def reset_round(self):
-        print("Resetting round.")
+    def reset_table(self):
+        print("Resetting table points.")
         self.table_points = 0
         self.cards_played = []
 
