@@ -1,104 +1,168 @@
 import random
 class Round:
-    def __init__(self, p1):
+    def __init__(self, p1, p2):
+        self.p1 = p1 #person
+        self.p2 = p2 #computer
+        self.turn = p1 #person goes first
         self.p1_cards_played = []
         self.p1_round_points = 0
         self.p2_cards_played = []
         self.p2_round_points = 0
-        self.cards_played = []
-        self.table_points = 0
-        self.dealer = p1  # Set initial dealer
+        self.cards_played = [] #combination of both players cards played
+        self.table_points = 0 #can never exceed 31
+        self.go_check = [] #frequency of "Player 1 Go" or frequency of "Player 2 Go" cannot exceed two. When one of them does, it resets
 
-    def update_dealer(self, p1, p2):
-        self.dealer = p1 if self.dealer == p2 else p2
+    def play(self):
+        input("Checking go count (Line 16)")
+        if self.go_check >= 2:
+            input(f"Go count is {self.go_check} (Line 18)")
+            self.reset_round()
+            input(f"Reset round (line 20)")
+            self.go_check = 0
+        input(f"Go count is {self.go_check} (Line 22)")
 
-    def play(self, p1, p2):
-        current_player = p1
-        while len(p1.hand.cards) > 0 and len(p2.hand.cards) > 0:
-            if self.dealer == p1:
-                self.computer_turn(p2)
-                if self.table_points == 31:
-                    print("31! Table count back to zero.")
-                    self.table_points = 0
-                    current_player = p2
-                    continue
-                elif not self.has_valid_card(p1):
-                    print("Go! Switching turns.")
-                    current_player = p1
-                self.player_turn(p1)
-
-            else:
-                self.player_turn(p1)
-                if self.table_points == 31:
-                    print("31! Table count back to zero.")
-                    self.table_points = 0
-                    current_player = p1
-                    continue
-                elif not self.has_valid_card(p1):
-                    print("Go! Switching turns.")
-                    current_player = p1
-                self.computer_turn(p2)
-        
-        while len(p1.hand.cards) > 0 or len(p2.hand.cards) > 0:
-            if current_player == p1 and len(p1.hand.cards) > 0:
-                self.player_turn(p1)
-            elif current_player == p2 and len(p2.hand.cards) > 0:
-                self.player_turn(p2)
-
-        while len(p1.hand.cards) > 0:
-            self.player_turn(p1)
-
-        while len(p2.hand.cards) > 0:
-            self.player_turn(p2)
-
-                
-        print("Round over! All cards have been played. Let's score.")
-
-
-    def computer_turn(self, p):
-        print("Computer's turn. ")
-        while True:
-            index = random.randint(0, len(p.hand.cards) - 1)
-            card = p.hand.cards[index]
-
-            if card.points + self.table_points <= 31:
-                self.p2_cards_played.append(card)
-                self.cards_played.append(card)
-                card_points = card.points
-                self.table_points += card_points
-                print(f">> Computer played: {card} | Table point total: {self.table_points}")
-                self.display_cards_played()
-                break
-            else:
-                pass
-        
-    def player_turn(self, p):
-        print(f"Your turn!" )
-        input(" --------------------- ")
-        self.display_hand(p)
-        
-        while True:
-            input_index = self.get_valid_input(p)
-            card = p.hand.cards[input_index]
+        while self.has_cards():
+            self.player_turn()
             
-            if card.points + self.table_points <= 31:
-                self.p1_cards_played.append(card)
-                self.cards_played.append(card)
-                self.display_cards_played()
-                card_points = card.points
-                self.table_points += card_points
-                print(f" >> You played {card} | Table point total: {self.table_points}")
-                p.hand.cards.pop(input_index)
-                input("-----------------------")
-                break
-            else:
-                print("Invalid card. Please choose a card that keeps the total below or equal to 31.")
-                self.display_hand(p)
+            input("Checking go count (Line 27)")
+            if self.go_check >= 2:
+                input(f"Go count is {self.go_check} (Line 29)")
+                self.reset_round()
+                input(f"Reset round (line 31)")
+                self.go_check = 0
+            input(f"Go count is {self.go_check} (Line 33)")
 
+            input("-----line 18----------")
+            self.computer_turn()
+
+            input("Checking go count (Line 38)")
+            if self.go_check >= 2:
+                input(f"Go count is {self.go_check} (Line 40)")
+                self.reset_round()
+                input(f"Reset round (line 42)")
+                self.go_check = 0
+            input(f"Go count is {self.go_check} (Line 44)")
+
+            input("-----line 46----------")
+            self.switch_turns()
+            input("-----line 48----------")
+        
+        if len(self.p2.hand.cards) == 0 and len(self.p1.hand.cards) == 0:
+            input("No cards are left")
+            print("Round over")
+        elif len(self.p1.hand.cards) == 0:
+            print(f"{self.p1.name} has run out of cards.")
+            while len(self.p2.hand.cards) > 0:
+                self.computer_turn()
+        elif len(self.p2.hand.cards) == 0:
+            print(f"{self.p2.name} has run out of cards.")
+            while len(self.p1.hand.cards) > 0:
+                self.player_turn()
+
+        if not self.has_valid_card(self.p1) and not self.has_valid_card(self.p2):
+            input("No cards are valid")
+            self.reset_round()
+
+    def player_turn(self):
+        print(f"{self.p1.name}'s turn!")
+        self.display_hand(self.p1)
+        input(f"------{self.p1.name}'s turn!-------")
+
+        # Check if the table points reach 31
+        input("Checking if self.table_points is 31 (Line 72)")
+        if self.table_points == 31:
+            print("Table count reaches 31. Resetting count.")
+            self.table_points = 0
+            input("Switching turns (line 76)") 
+            self.switch_turns()  
+        input("Self.table_points is not 31 (Line 78)")  
+        
+        input("Checking for valid card")
+        if self.has_valid_card(self.p1):
+            input("Valid card exists")
+
+            valid_input = False
+            while not valid_input:
+                input_index = self.get_valid_input(self.p1)
+
+                if input_index is not None:  # Check if get_valid_input returns a valid index
+                    chosen_card = self.p1.hand.cards[input_index]
+
+                    if chosen_card.points + self.table_points <= 31:
+                        valid_input = True
+                        self.p1.hand.cards.pop(input_index)  # Remove the card only if it's valid
+                        self.cards_played.append(chosen_card)
+                        self.table_points += chosen_card.points
+                        print(f"{self.p1.name} plays {chosen_card}. | Table count = {self.table_points}")
+                        self.switch_turns()
+                    else:
+                        print("Invalid move. The selected card exceeds 31 points. Try again.")
+                else:
+                    print("Invalid input. Please enter a valid card position.")        
+
+        else:
+            self.go_check += 1
+            print(f"Go check = {self.go_check} (Line 105)")
+            print(f"{self.p1.name} cannot play. Go! (Line 106)")
+
+    def computer_turn(self):
+        print(f"{self.p2.name}'s turn.")
+        self.display_hand(self.p2)
+        input(f"------{self.p2.name}'s turn!-------")
+
+        # Check if the table points reach 31
+        input("Checking if self.table_points is 31 (Line 114)")
+        if self.table_points == 31:
+            print("Table count reaches 31. Resetting count.")
+            self.table_points = 0
+            input("Switching turns (line 118)") 
+            self.switch_turns()
+        input("Self.table_points is not 31 (Line 120)")  
+
+        # Check if the computer has valid cards to play
+        input("Checking for valid card")
+        if self.has_valid_card(self.p2):
+            valid_cards = [card for card in self.p2.hand.cards if card.points + self.table_points <= 31]
+            input("Valid card exists")
+    
+            if valid_cards:
+                # If the computer has valid cards, it plays one randomly
+                chosen_card = random.choice(valid_cards)
+                self.p2.hand.cards.remove(chosen_card)
+                self.cards_played.append(chosen_card)
+                self.table_points += chosen_card.points
+
+                print(f"{self.p2.name} plays {chosen_card}.")
+
+            # Display the updated game state
+            self.display_hand(self.p2)
+            self.display_cards_played()
+            print(f"Table Points: {self.table_points}")
+
+        else:
+            # If the computer has no valid cards, it says "Go"
+            self.go_check += 1
+            print(f"Go check = {self.go_check} (Line 145)")
+            print(f"{self.p2.name} cannot play. Go! (Line 146)")
+                
+
+    def switch_turns(self):
+        if self.turn == self.p1:
+            self.turn = self.p2
+        elif self.turn == self.p2:
+            self.turn = self.p1
+
+    def reset_round(self):
+        print("Resetting round.")
+        self.table_points = 0
+        self.cards_played = []
 
     def calc_points(self, card_list):
         total_points = sum(card.points for card in card_list)
         return total_points 
+    
+    def has_cards(self):
+        return len(self.p1.hand.cards) > 0 and len(self.p2.hand.cards) > 0
     
     def has_valid_card(self, p):
         for card in p.hand.cards:
@@ -111,9 +175,6 @@ class Round:
 
     def display_cards_played(self):
         print(f"Cards Played: {', '.join(str(card) for card in self.cards_played)}")
-
-    def display_dealer(self):
-        print(f"{self.dealer} is the dealer.")
 
     def get_valid_input(self, p):
         while True:

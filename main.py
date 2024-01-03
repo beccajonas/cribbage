@@ -10,12 +10,13 @@ class Main:
         self.p1 = Player.create_player()
         self.p2 = Player("Computer")
         self.state = GameState()
-        self.round = Round(self.p1)
+        self.round = Round(self.p1, self.p2)
 
     def fill_crib(self):
+        input("Shuffling...")
         self.deck.shuffle()
+        input("Dealing...")
         self.deck.deal([self.p1, self.p2])
-        self.round.display_dealer()
 
         while len(self.p1.hand.cards) > 4 or len(self.p2.hand.cards) > 4:
             self.round.display_hand(self.p1)
@@ -26,10 +27,10 @@ class Main:
             self.state.computer_discard(self.p2)
 
         print("The crib is filled. Let's play.")
+        input("---------------")
 
     def play_round(self):
-        self.round.play(self.p1, self.p2)
-        self.round.update_dealer(self.p1, self.p2)
+        self.round.play()
 
     def score_round(self):
         pass
