@@ -1,4 +1,6 @@
 import random
+import sys
+
 class Round:
     def __init__(self, p1, p2):
         self.p1 = p1 #person
@@ -13,52 +15,72 @@ class Round:
         self.go_list = [] #frequency of "Player 1 Go" or frequency of "Player 2 Go" cannot exceed two. When one of them does, it resets
 
     def play(self):
-        self.check_go_list()
         while self.has_cards():
             self.player_turn()
-            input("-----line 19----------")
+            input("-----------")
             self.check_go_list()
-            input("-----line 21----------")
             self.computer_turn()
-            input("-----line 23----------")
+            input("-----------")
             self.check_go_list()
-            input("-----line 25----------")
             self.switch_turns()
-            input("-----line 27----------")
         
         if len(self.p2.hand.cards) == 0 and len(self.p1.hand.cards) == 0:
-            input("No cards are left")
-            print("Round over")
+            input("No cards left to play.")
+            print("Round over!")
+            sys.exit()
+
         elif len(self.p1.hand.cards) == 0:
             print(f"{self.p1.name} has run out of cards.")
+
             while len(self.p2.hand.cards) > 0:
                 self.computer_turn()
+                if not self.has_valid_card(self.p2):
+                    if len(self.p2.hand.cards) == 0 and len(self.p1.hand.cards) == 0:
+                        input("No cards are left (Line 39)")
+                        print("Round over!")
+                        sys.exit()
+                    print("Resetting from line 42...")
+                    self.reset_table()
+                    # if len(self.p2.hand.cards) == 0 and len(self.p1.hand.cards) == 0:
+                    #     input("No cards are left (Line 45)")
+                    #     print("Round over!")
+                    #     sys.exit()
+                    
+
         elif len(self.p2.hand.cards) == 0:
             print(f"{self.p2.name} has run out of cards.")
+
             while len(self.p1.hand.cards) > 0:
                 self.player_turn()
+                if len(self.p2.hand.cards) == 0 and len(self.p1.hand.cards) == 0:
+                        input("No cards are left (Line 56)")
+                        print("Round over!")
+                        sys.exit()
+                if not self.has_valid_card(self.p1):
+                    print("Resetting from line 60...")
+                    self.reset_table()
+                    # if len(self.p2.hand.cards) == 0 and len(self.p1.hand.cards) == 0:
+                    #     input("No cards are left (Line 63)")
+                    #     print("Round over!")
+                    #     sys.exit()
 
         if not self.has_valid_card(self.p1) and not self.has_valid_card(self.p2):
-            input("No cards are valid")
+            input("No one can play. Resetting table.")
             self.reset_table()
 
     def player_turn(self):
-        print(f"{self.p1.name}'s turn!")
-        self.display_hand(self.p1)
-        input(f"------{self.p1.name}'s turn!-------")
-
+        self.check_go_list()
         # Check if the table points reach 31
-        input("Checking if self.table_points is 31 (Line 72)")
         if self.table_points == 31:
             print("Table count reaches 31. Resetting count.")
             self.table_points = 0
-            input("Switching turns (line 76)") 
             self.switch_turns()  
-        input("Self.table_points is not 31 (Line 78)")  
+
+        print(f"{self.p1.name}'s turn!")
+        self.display_hand(self.p1)
+        input("-----------")
         
-        input("Checking for valid card")
         if self.has_valid_card(self.p1):
-            input("Valid card exists")
 
             valid_input = False
             while not valid_input:
@@ -81,28 +103,22 @@ class Round:
 
         else:
             self.go_list.append("Player 1 Go")
-            print(f"Go check = {self.go_list} (Line 105)")
-            print(f"{self.p1.name} cannot play. Go! (Line 106)")
+            print(f"{self.p1.name} cannot play. Go!")
 
     def computer_turn(self):
+        self.check_go_list()
+        # Check if the table points reach 31
+        if self.table_points == 31:
+            self.table_points = 0
+            self.switch_turns()
+
         print(f"{self.p2.name}'s turn.")
         self.display_hand(self.p2)
-        input(f"------{self.p2.name}'s turn!-------")
-
-        # Check if the table points reach 31
-        input("Checking if self.table_points is 31 (Line 114)")
-        if self.table_points == 31:
-            print("Table count reaches 31. Resetting count.")
-            self.table_points = 0
-            input("Switching turns (line 118)") 
-            self.switch_turns()
-        input("Self.table_points is not 31 (Line 120)")  
+        input("-----------")
 
         # Check if the computer has valid cards to play
-        input("Checking for valid card")
         if self.has_valid_card(self.p2):
             valid_cards = [card for card in self.p2.hand.cards if card.points + self.table_points <= 31]
-            input("Valid card exists")
     
             if valid_cards:
                 # If the computer has valid cards, it plays one randomly
@@ -121,17 +137,17 @@ class Round:
         else:
             # If the computer has no valid cards, it says "Go"
             self.go_list.append("Player 2 Go")
-            print(f"Go check = {self.go_list} (Line 145)")
-            print(f"{self.p2.name} cannot play. Go! (Line 146)")
+            print(f"{self.p2.name} cannot play. Go!")
     
     def check_go_list(self):
-        print(f"Checking go list | {self.go_list}")
+        input(self.go_list)
         for _ in self.go_list:
-            if self.go_list.count("Player 1 Go") == 1 and self.go_list.count("Player 2 Go") == 1:
+            if "Player 1 Go" in self.go_list and "Player 2 Go" in self.go_list:
+                input("Neither players can go.")
                 self.reset_table()
                 self.go_list = []
             else:
-                print("Only one player has said 'Go'. Continue.")
+                pass
 
     def switch_turns(self):
         if self.turn == self.p1:
