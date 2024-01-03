@@ -18,16 +18,12 @@ class Round:
         while self.has_cards():
             self.player_turn()
             input("-----------")
-            self.check_go_list()
             self.computer_turn()
             input("-----------")
-            self.check_go_list()
             self.switch_turns()
         
         if len(self.p2.hand.cards) == 0 and len(self.p1.hand.cards) == 0:
-            input("No cards left to play.")
-            print("Round over!")
-            sys.exit()
+            self.end_round("No cards left to play.")
 
         elif len(self.p1.hand.cards) == 0:
             print(f"{self.p1.name} has run out of cards.")
@@ -36,15 +32,8 @@ class Round:
                 self.computer_turn()
                 if not self.has_valid_card(self.p2):
                     if len(self.p2.hand.cards) == 0 and len(self.p1.hand.cards) == 0:
-                        input("No cards are left (Line 39)")
-                        print("Round over!")
-                        sys.exit()
-                    print("Resetting from line 42...")
+                        self.end_round("No cards left to play.")
                     self.reset_table()
-                    # if len(self.p2.hand.cards) == 0 and len(self.p1.hand.cards) == 0:
-                    #     input("No cards are left (Line 45)")
-                    #     print("Round over!")
-                    #     sys.exit()
                     
 
         elif len(self.p2.hand.cards) == 0:
@@ -52,17 +41,11 @@ class Round:
 
             while len(self.p1.hand.cards) > 0:
                 self.player_turn()
-                if len(self.p2.hand.cards) == 0 and len(self.p1.hand.cards) == 0:
-                        input("No cards are left (Line 56)")
-                        print("Round over!")
-                        sys.exit()
                 if not self.has_valid_card(self.p1):
-                    print("Resetting from line 60...")
+                    if len(self.p2.hand.cards) == 0 and len(self.p1.hand.cards) == 0:
+                            self.end_round("No cards left to play.")
                     self.reset_table()
-                    # if len(self.p2.hand.cards) == 0 and len(self.p1.hand.cards) == 0:
-                    #     input("No cards are left (Line 63)")
-                    #     print("Round over!")
-                    #     sys.exit()
+
 
         if not self.has_valid_card(self.p1) and not self.has_valid_card(self.p2):
             input("No one can play. Resetting table.")
@@ -113,7 +96,6 @@ class Round:
             self.switch_turns()
 
         print(f"{self.p2.name}'s turn.")
-        self.display_hand(self.p2)
         input("-----------")
 
         # Check if the computer has valid cards to play
@@ -138,9 +120,13 @@ class Round:
             # If the computer has no valid cards, it says "Go"
             self.go_list.append("Player 2 Go")
             print(f"{self.p2.name} cannot play. Go!")
+
+    def end_round(self, message):
+        input(message)
+        print("Round over!")
+        sys.exit()
     
     def check_go_list(self):
-        input(self.go_list)
         for _ in self.go_list:
             if "Player 1 Go" in self.go_list and "Player 2 Go" in self.go_list:
                 input("Neither players can go.")
@@ -161,17 +147,17 @@ class Round:
         self.cards_played = []
 
     def calc_points(self, card_list):
-        total_points = sum(card.points for card in card_list)
-        return total_points 
+        return sum(card.points for card in card_list)
     
     def has_cards(self):
         return len(self.p1.hand.cards) > 0 and len(self.p2.hand.cards) > 0
     
     def has_valid_card(self, p):
-        for card in p.hand.cards:
-            if card.points + self.table_points <= 31:
-                return True
-        return False
+        # for card in p.hand.cards:
+        #     if card.points + self.table_points <= 31:
+        #         return True
+        # return False
+        return any(card.points + self.table_points <= 31 for card in p.hand.cards)
 
     def display_hand(self, p):
         print(f"{p.name}'s Hand: {', '.join(str(card) for card in p.hand.cards)}")
