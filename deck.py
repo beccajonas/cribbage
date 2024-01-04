@@ -2,6 +2,10 @@ from card import Card
 import random
 
 class Deck:
+    '''
+    Represents a deck of cards with methods for generating, shuffling, and dealing cards.
+    '''
+
     def __init__(self):
         self.values = ["A", 2, 3, 4, 5, 6, 7, 8, 9, 10, "J", "Q", "K"]
         self.suits = ["♣", "♥", "♠", "♦"]
@@ -25,6 +29,10 @@ class Deck:
         return deck
 
     def deal(self, players):
+        '''
+        Deal cards to players from the deck.
+        - Args: List of player objects to whom cards are dealt.
+        '''
         for _ in range(6): 
             for player in players:
                 card = self.cards.pop(0) 
