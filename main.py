@@ -2,6 +2,7 @@ from deck import Deck
 from player import Player
 from game_state import GameState
 from round import Round
+from scoring import Scoring
 
 class Main:
     
@@ -18,6 +19,7 @@ class Main:
         self.p2 = Player("Computer")
         self.state = GameState()
         self.round = Round(self.p1, self.p2)
+        self.scoring = Scoring()
 
     def fill_crib(self):
         input("Shuffling...")
@@ -38,9 +40,6 @@ class Main:
 
     def play_round(self):
         self.round.play()
-
-    def score_round(self):
-        pass
 
 if __name__ == "__main__":
     game = Main()

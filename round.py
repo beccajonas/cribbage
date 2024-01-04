@@ -1,3 +1,4 @@
+from scoring import Scoring
 import random
 import sys
 
@@ -13,6 +14,7 @@ class Round:
         self.cards_played = [] #combination of both players cards played
         self.table_points = 0 #can never exceed 31
         self.go_list = [] #frequency of "Player 1 Go" or frequency of "Player 2 Go" cannot exceed two. When one of them does, it resets
+        self.scoring = Scoring()
 
     def play(self):
         while self.has_cards():
@@ -76,6 +78,7 @@ class Round:
                         valid_input = True
                         self.p1.hand.cards.pop(input_index)  # Remove the card only if it's valid
                         self.cards_played.append(chosen_card)
+                        self.p1_cards_played.append(chosen_card)
                         self.table_points += chosen_card.points
                         print(f"{self.p1.name} plays {chosen_card}. | Table count = {self.table_points}")
                         self.switch_turns()
@@ -106,6 +109,7 @@ class Round:
                 # If the computer has valid cards, it plays one randomly
                 chosen_card = random.choice(valid_cards)
                 self.p2.hand.cards.remove(chosen_card)
+                self.p2_cards_played.append(chosen_card)
                 self.cards_played.append(chosen_card)
                 self.table_points += chosen_card.points
 
@@ -124,6 +128,10 @@ class Round:
     def end_round(self, message):
         input(message)
         print("Round over!")
+        self.p1_round_points = self.scoring.calc_points(self.p1_cards_played)
+        print(f"Computer score = {self.p1_round_points}")
+        self.p2_round_points = self.scoring.calc_points(self.p2_cards_played)
+        print(f"Computer score = {self.p2_round_points}")
         sys.exit()
     
     def check_go_list(self):
@@ -175,4 +183,6 @@ class Round:
                 else:
                     print("Invalid input. Please enter a valid card position.")
             else: print("Invalid input. Please enter a valid card position.")
+    
+    
 
