@@ -4,8 +4,15 @@ from game_state import GameState
 from round import Round
 
 class Main:
+    
     def __init__(self):
+        ascii_art = ''' ___   ___   ___
+|#  | |A  | |#  |
+| # | | ♠ | | # |
+|__#| |__A| |__#|
+'''
         print("Welcome to Cribbage!")
+        print(ascii_art)
         self.deck = Deck()
         self.p1 = Player.create_player()
         self.p2 = Player("Computer")
