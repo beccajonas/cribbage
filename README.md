@@ -48,6 +48,9 @@ To start the game, run the `main.py` file. The game will begin by shuffling the 
    - `discard(p)`: Allows the player to discard cards to the crib.
    - `computer_discard(p)`: Allows the computer to discard cards to the crib.
 
+## Unit Testing
+Ensure the correctness of the scoring functionality with unit tests. Run the following tests using `pytest`:
+
 ## How to Play
 1. Follow the on-screen instructions to fill the crib with discarded cards.
 2. The game will alternate between your turn and the computer's turn.
