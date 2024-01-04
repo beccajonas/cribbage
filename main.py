@@ -20,7 +20,6 @@ class Main:
         self.p2 = Player("Computer")
         self.state = GameState()
         self.round = Round(self.p1, self.p2)
-        self.scoring = Scoring()
 
     def fill_crib(self):
         print("Shuffling...")

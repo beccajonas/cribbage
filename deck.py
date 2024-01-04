@@ -37,7 +37,7 @@ class Deck:
             for player in players:
                 card = self.cards.pop(0) 
                 player.hand.add_card(card)
-    
+
     def shuffle(self):
         random.shuffle(self.cards)
 

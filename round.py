@@ -14,9 +14,9 @@ class Round:
         self.p2_round_points = 0
         self.cards_played = [] # Combination of both players cards played
         self.table_points = 0 
-        self.go_list = [] #Frequency of "Player 1 Go" or frequency of "Player 2 Go" cannot exceed 1. When one of them does, it resets
+        self.go_list = [] # Frequency of "Player 1 Go" or frequency of "Player 2 Go" cannot exceed 1. When one of them does, it resets.
         self.scoring = Scoring()
-
+        
     def play(self):
         while self.has_cards():
             print(f"{self.p1.name}'s points = {self.p1_round_points} | Computer's points = {self.p2_round_points}")
@@ -41,7 +41,7 @@ class Round:
         self.check_go_list()
 
         if self.table_points == 31:
-            print("31! + 1 point for computer. Resetting table points. (line 43)")
+            print("31! + 1 point for computer.")
             self.p2_round_points += 1
             time.sleep(2)
             self.table_points = 0
@@ -77,16 +77,14 @@ class Round:
 
         else:
             self.go_list.append("Player 1 Go")
-            print(f"{self.p1.name} cannot play. Go! + 1 point for Computer.")
-            self.p2_round_points += 1
+            print(f"{self.p1.name} cannot play. Go!")
             print("-------------")
-            input("Hit enter...")
 
     def computer_turn(self):
         self.check_go_list()
 
         if self.table_points == 31:
-            print(f"31! + 1 point for {self.p1.name}. Resetting table points. (line 87)")
+            print(f"31! + 1 point for {self.p1.name}.")
             self.p1_round_points += 1
             time.sleep(2)
             self.table_points = 0
@@ -113,16 +111,13 @@ class Round:
         else:
             # If the computer has no valid cards, it says "Go"
             self.go_list.append("Player 2 Go")
-            print(f"Computer cannot play. Go! +1 point for {self.p1.name}.")
-            self.p1_round_points += 1
+            print(f"Computer cannot play. Go!")
             print("-------------")
-            input("Hit enter...")
 
     def check_go_list(self):
         for _ in self.go_list:
             if "Player 1 Go" in self.go_list and "Player 2 Go" in self.go_list:
                 print("Neither players can go.")
-                input("Hit enter...")
                 self.reset_table()
                 self.go_list = []
             else:
@@ -136,7 +131,6 @@ class Round:
 
     def handle_player_out_of_cards(self, player_out, other_player):
         print(f"{player_out.name} has run out of cards.")
-        input("Hit enter...")
 
         while len(other_player.hand.cards) > 0:
             self.computer_turn() if player_out == self.p1 else self.player_turn()
@@ -150,7 +144,6 @@ class Round:
         print("Resetting table points to 0.")
         self.table_points = 0
         self.cards_played = []
-        input("Hit enter...")
 
     def get_valid_input(self, p):
         while True:
@@ -176,10 +169,11 @@ class Round:
         self.p2_round_points += self.scoring.calc_points(self.p2_cards_played, self.p2)
         print(f"Your score = {self.p1_round_points} | Computer score = {self.p2_round_points}")
         if self.p2_round_points == self.p1_round_points:
-            print(f"It's a tie! Winner is...{random.choice([self.p1, self.p2])}")
+            winner = random.choice([self.p1, self.p2])
+            print(f"It's a tie! Winner is... {winner}!")
         elif self.p1_round_points > self.p2_round_points:
             print("You win!")
-        elif self.p2_round_points > self.p1_round_points:
+        else:
             print("Computer wins.")
         sys.exit()
 
