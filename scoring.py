@@ -10,8 +10,8 @@ class Scoring:
     def __init__(self):
         self.values = ["A", 2, 3, 4, 5, 6, 7, 8, 9, 10, "J", "Q", "K"]
 
-    def calc_points(self, card_list):
-        print(", ".join(str(card) for card in card_list))
+    def calc_points(self, card_list, player):
+        print(f"{player.name}'s hand: " + ", ".join(str(card) for card in card_list))
         points = 0
     
         # Check for any combination of cards that equal 15

@@ -1,3 +1,4 @@
+import time
 from deck import Deck
 from player import Player
 from game_state import GameState
@@ -22,26 +23,25 @@ class Main:
         self.scoring = Scoring()
 
     def fill_crib(self):
-        input("Shuffling...")
+        print("Shuffling...")
+        time.sleep(.5)
         self.deck.shuffle()
-        input("Dealing...")
+        print("Dealing...")
+        time.sleep(.5)
         self.deck.deal([self.p1, self.p2])
 
         while len(self.p1.hand.cards) > 4 or len(self.p2.hand.cards) > 4:
             self.round.display_hand(self.p1)
             self.state.discard(self.p1)
             self.round.display_hand(self.p1)
-            self.state.computer_discard(self.p2)
             self.state.discard(self.p1)
+            self.state.computer_discard(self.p2)
             self.state.computer_discard(self.p2)
 
         print("The crib is filled. Let's play.")
-        input("---------------")
-
-    def play_round(self):
-        self.round.play()
+        time.sleep(1)
 
 if __name__ == "__main__":
     game = Main()
     game.fill_crib()
-    game.play_round()
+    game.round.play()
