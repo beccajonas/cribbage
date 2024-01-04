@@ -1,6 +1,6 @@
 import random
 
-class GameState:
+class Crib:
     def __init__(self):
         self.crib = []
 
