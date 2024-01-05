@@ -5,6 +5,9 @@ name = "pypi"
 
 [packages]
 pytest = "*"
+colorama = "*"
+pynput = "*"
+termcolor = "*"
 
 [dev-packages]
 

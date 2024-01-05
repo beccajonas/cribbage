@@ -1,7 +1,9 @@
+from animations import Animations
+from termcolor import colored
 from scoring import Scoring
 import random
-import time
 import sys
+import os
 
 class Round:
     def __init__(self, p1, p2):
@@ -16,6 +18,7 @@ class Round:
         self.table_points = 0 
         self.go_list = [] # Frequency of "Player 1 Go" or frequency of "Player 2 Go" cannot exceed 1. 
         self.scoring = Scoring()
+        self.animations = Animations()
         
     def play(self):
         while self.has_cards():
@@ -46,7 +49,7 @@ class Round:
         self.check_go_list()
 
         if self.table_points == 31:
-            print("31! + 1 point for computer.")
+            print(colored(f"31! + 1 point for Computer.", "green", attrs=['bold']))
             self.p2_round_points += 1
             self.table_points = 0
             self.switch_turns()  
@@ -74,9 +77,9 @@ class Round:
                         print("-------------")
                         self.switch_turns()
                     else:
-                        print("Invalid move. The selected card exceeds 31 points. Try again.")
+                        print(colored("Invalid move. The selected card exceeds 31 points. Try again.", 'red'))
                 else:
-                    print("Invalid input. Please enter a valid card position.")        
+                    print(colored("Invalid input. Please enter a valid card position.", "red"))        
 
         else:
             self.go_list.append("Player 1 Go")
@@ -87,7 +90,7 @@ class Round:
         self.check_go_list()
 
         if self.table_points == 31:
-            print(f"31! + 1 point for {self.p1.name}.")
+            print(colored(f"31! + 1 point for {self.p1.name}.", "green", attrs=['bold']))
             self.p1_round_points += 1
             self.table_points = 0
             self.switch_turns()
@@ -122,7 +125,6 @@ class Round:
         for _ in self.go_list:
             if "Player 1 Go" in self.go_list and "Player 2 Go" in self.go_list:
                 print("Neither players can go.")
-                input("-------------")
                 self.reset_table()
                 self.go_list = []
             else:
@@ -147,8 +149,10 @@ class Round:
         
     def reset_table(self):
         print("Resetting table points to 0.")
+        input("Hit enter to clear screen.")
         self.table_points = 0
         self.cards_played = []
+        os.system('clear')
 
     def get_valid_input(self, p):
         while True:
@@ -158,8 +162,8 @@ class Round:
                 if input_index in range(0, len(p.hand.cards)):
                     return input_index
                 else:
-                    print("Invalid input. Please enter a valid card position.")
-            else: print("Invalid input. Please enter a valid card position.")
+                    print(colored("Invalid input. Please enter a valid card position.", "red"))
+            else: print(colored("Invalid input. Please enter a valid card position.", "red"))
     
     def has_cards(self):
         return len(self.p1.hand.cards) > 0 and len(self.p2.hand.cards) > 0
@@ -169,17 +173,30 @@ class Round:
     
     def end_round(self):
         input("Round over! Hit enter to calculate points...")
-        time.sleep(2)
+        self.animations.display_calculating()
+        print()
         self.p1_round_points += self.scoring.calc_points(self.p1_cards_played, self.p1)
         self.p2_round_points += self.scoring.calc_points(self.p2_cards_played, self.p2)
         print(f"Your score = {self.p1_round_points} | Computer score = {self.p2_round_points}")
         if self.p2_round_points == self.p1_round_points:
             winner = random.choice([self.p1, self.p2])
             print(f"It's a tie! Winner is... {winner}!")
+            if winner == self.p1:
+                input("You win! Hit enter to celebrate!")
+                os.system('clear')
+                self.animations.display_winner()
+            else:
+                input("You lose! Hit enter to wallow in self pity.")
+                os.system('clear')
+                self.animations.display_loser()
         elif self.p1_round_points > self.p2_round_points:
-            print("You win!")
+            input("You win! Hit enter to celebrate!")
+            os.system('clear')
+            self.animations.display_winner()
         else:
-            print("Computer wins.")
+            input("You lose! Hit enter to wallow in self pity.")
+            os.system('clear')
+            self.animations.display_loser()
         sys.exit()
 
     def display_hand(self, p):

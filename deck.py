@@ -1,4 +1,5 @@
 from card import Card
+from termcolor import colored
 import random
 
 class Deck:
@@ -8,7 +9,7 @@ class Deck:
 
     def __init__(self):
         self.values = ["A", 2, 3, 4, 5, 6, 7, 8, 9, 10, "J", "Q", "K"]
-        self.suits = ["♣", "♥", "♠", "♦"]
+        self.suits = [colored("♣", 'black'), colored("♥", 'red'), colored("♠", 'black'), colored("♦", 'red')]
         self.cards = self.generate_deck()
 
     def __str__(self):

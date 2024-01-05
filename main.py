@@ -4,6 +4,7 @@ from player import Player
 from crib import Crib
 from round import Round
 from scoring import Scoring
+from animations import Animations
 
 class Main:
     
@@ -20,14 +21,18 @@ class Main:
         self.p2 = Player("Computer")
         self.crib = Crib()
         self.round = Round(self.p1, self.p2)
+        self.animations = Animations()
 
     def fill_crib(self):
-        print("Shuffling...")
-        time.sleep(.5)
+        input("Hit enter to shuffle...")
+        self.animations.display_shuffle()
         self.deck.shuffle()
-        print("Dealing...")
-        time.sleep(.5)
+        print()
+        input("Hit enter to deal...")
+        self.animations.display_shuffle()
+
         self.deck.deal([self.p1, self.p2])
+        print()
 
         while len(self.p1.hand.cards) > 4 or len(self.p2.hand.cards) > 4:
             self.round.display_hand(self.p1)
@@ -38,7 +43,7 @@ class Main:
             self.crib.computer_discard(self.p2)
 
         print("The crib is filled. Let's play.")
-        time.sleep(1)
+        input("-------------")
 
 if __name__ == "__main__":
     game = Main()
