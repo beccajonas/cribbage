@@ -3,6 +3,8 @@
 ## Introduction
 Welcome to the Cribbage game! This Python program allows you to play Cribbage against a computer opponent. Cribbage is a classic card game that involves creating combinations of cards to score points.
 
+<img width="821" alt="Welcome to Cribbage" src="https://github.com/beccajonas/cribbage/assets/87732074/a812309f-4ce6-4285-9cac-74c169e78102">
+
 ## Getting Started
 To start the game, run the `main.py` file. The game will begin by shuffling the deck, dealing cards to you and the computer player, and filling the crib.
 
@@ -43,6 +45,8 @@ To start the game, run the `main.py` file. The game will begin by shuffling the 
 
 3. **Scoring Class Functions:**
    - `calc_points(card_list, player)`: Calculates points based on card combinations.
+   
+<img width="683" alt="31 scoring" src="https://github.com/beccajonas/cribbage/assets/87732074/c0dcf209-24a0-4f64-8568-c2b7eb7284c7">
 
 4. **Crib Class Functions:**
    - `discard(p)`: Allows the player to discard cards to the crib.
@@ -59,5 +63,7 @@ To start the game, run the `main.py` file. The game will begin by shuffling the 
 5. The round continues until both players cannot play or run out of cards, keeping score when the table count of "31" is hit by a player.
 6. Points are calculated based on card combinations at the end of each round. This version currently supports scoring for pairs and combinations that equal 15.
 7. The game ends when a player reaches the maximum score or when you decide to exit.
+   
+<img width="691" alt="Final scoring" src="https://github.com/beccajonas/cribbage/assets/87732074/831d8385-5570-46df-8a31-2624e62ea186">
 
 Enjoy playing Cribbage!
