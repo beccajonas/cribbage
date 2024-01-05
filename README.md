@@ -3,7 +3,7 @@
 ## Introduction
 Welcome to the Cribbage! This Python program allows you to play Cribbage against a computer opponent. Cribbage is a classic card game that involves creating combinations of cards to score points.
 
-<img width="821" alt="Welcome to Cribbage" src="https://github.com/beccajonas/cribbage/assets/87732074/a812309f-4ce6-4285-9cac-74c169e78102">
+<img width="867" alt="Screen Shot 2024-01-05 at 1 33 11 PM" src="https://github.com/beccajonas/cribbage/assets/87732074/cab781b4-cb96-4432-8f2e-9204d4a6bd01">
 
 ## Getting Started
 To start the game, run the `main.py` file. The game will begin by shuffling the deck, dealing cards to you and the computer player, and filling the crib.
