@@ -3,7 +3,9 @@
 ## Introduction
 Welcome to the Cribbage! This Python program allows you to play Cribbage against a computer opponent. Cribbage is a classic card game that involves creating combinations of cards to score points.
 
-<img width="867" alt="Screen Shot 2024-01-05 at 1 33 11 PM" src="https://github.com/beccajonas/cribbage/assets/87732074/cab781b4-cb96-4432-8f2e-9204d4a6bd01">
+This iteration of the game assumes you have prior knowledge of [Cribbage rules,](https://bicyclecards.com/how-to-play/cribbage) game object, etc. 
+
+<img width="867" alt="Game start" src="https://github.com/beccajonas/cribbage/assets/87732074/cab781b4-cb96-4432-8f2e-9204d4a6bd01">
 
 ## Getting Started
 To start the game, run the `main.py` file. The game will begin by shuffling the deck, dealing cards to you and the computer player, and filling the crib.
@@ -29,6 +31,9 @@ To start the game, run the `main.py` file. The game will begin by shuffling the 
 
 6. **Card Class (`player.py`):**
    - Represents a playing card with a value, suit, and point value.
+    
+7. **Animations Class (`animations.py`)**
+   - Manages dynanic print elements.
 
 ### Functions
 1. **Main Class Functions:**
@@ -45,8 +50,8 @@ To start the game, run the `main.py` file. The game will begin by shuffling the 
 
 3. **Scoring Class Functions:**
    - `calc_points(card_list, player)`: Calculates points based on card combinations.
-   
-<img width="683" alt="31 scoring" src="https://github.com/beccajonas/cribbage/assets/87732074/c0dcf209-24a0-4f64-8568-c2b7eb7284c7">
+
+<img width="577" alt="31 scoring" src="https://github.com/beccajonas/cribbage/assets/87732074/0bf168e3-cc7a-4453-af87-bd917241c9f0">
 
 4. **Crib Class Functions:**
    - `discard(p)`: Allows the player to discard cards to the crib.
@@ -63,7 +68,7 @@ To start the game, run the `main.py` file. The game will begin by shuffling the 
 5. The round continues until both players cannot play or run out of cards, keeping score when the table count of "31" is hit by a player.
 6. Points are calculated based on card combinations at the end of each round. This version currently supports scoring for pairs and combinations that equal 15.
 7. The game ends when a player reaches the maximum score or when you decide to exit.
-   
-<img width="691" alt="Final scoring" src="https://github.com/beccajonas/cribbage/assets/87732074/831d8385-5570-46df-8a31-2624e62ea186">
+
+<img width="707" alt="Round over screen" src="https://github.com/beccajonas/cribbage/assets/87732074/66e7e1e8-70be-4c4f-acd5-7e5324866ed4">
 
 Enjoy playing Cribbage!
