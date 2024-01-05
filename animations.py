@@ -17,22 +17,21 @@ class Animations:
             colored('= = = = = = = = =', 'blue')
         ]
         
-
     def display_shuffle(self):
         for i in range(10):
-          time.sleep(0.2)
-          sys.stdout.write("\r" + self.shuffle[i % len(self.shuffle)])
-          sys.stdout.flush()
+            time.sleep(0.2)
+            sys.stdout.write("\r" + self.shuffle[i % len(self.shuffle)])
+            sys.stdout.flush()
 
     def display_calculating(self):
-        for i in range(15):
+        for i in range(10):
             time.sleep(0.2)
             sys.stdout.write("\r" + self.calculating[i % len(self.calculating)])
             sys.stdout.flush()
-          
+
     def display_winner(self):
         colors = ["red", "white", "green", "blue"]
-        for i in range(3):
+        for i in range(2):
             for color in colors:
                 time.sleep(0.2)
                 sys.stdout.write("\r" + colored("♠ ♠ ♠ YOU WIN! ♠ ♠ ♠\n♥ ♥ ♥ YOU WIN! ♥ ♥ ♥ \n♣ ♣ ♣ YOU WIN! ♣ ♣ ♣\n♦ ♦ ♦ YOU WIN! ♦ ♦ ♦ ", color, attrs=['bold']))

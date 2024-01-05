@@ -22,7 +22,6 @@ class Round:
         
     def play(self):
         while self.has_cards():
-            print(colored(f"{self.p1.name}'s score = {self.p1_round_points} | Computer score = {self.p2_round_points}", "green"))
             if self.turn == self.p1:
                 self.player_turn()
                 self.computer_turn()
@@ -56,10 +55,8 @@ class Round:
             input("-------------")
         print(f"{self.p1.name}'s turn!")
         self.display_hand(self.p1)
-        
-        
+         
         if self.has_valid_card(self.p1):
-
             valid_input = False
             while not valid_input:
                 input_index = self.get_valid_input(self.p1)
@@ -90,7 +87,7 @@ class Round:
         self.check_go_list()
 
         if self.table_points == 31:
-            print(colored(f"{self.p1.name}'s score = {self.p1_round_points} | Computer score = {self.p2_round_points}", "green"))
+            print(colored(f"31! + 1 point for {self.p1.name}.", "green", attrs=['bold']))
             self.p1_round_points += 1
             self.table_points = 0
             self.switch_turns()
