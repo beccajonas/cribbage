@@ -21,7 +21,7 @@ To start the game, run the `main.py` file. The game will begin by shuffling the 
 3. **Scoring Class (`scoring.py`):**
    - Calculates points based on specific card combinations in the game.
 
-4. **Crib Class (`game_state.py`):**
+4. **Crib Class (`crib.py`):**
    - Manages the initial game setup for establishing the crib.
 
 5. **Hand Class (`player.py`):**
