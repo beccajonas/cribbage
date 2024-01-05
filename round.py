@@ -7,22 +7,27 @@ class Round:
     def __init__(self, p1, p2):
         self.p1 = p1 
         self.p2 = p2 # Computer player
-        self.turn = p1 # Person who goes first
+        self.turn = random.choice([p1, p2])
         self.p1_cards_played = []
         self.p1_round_points = 0
         self.p2_cards_played = []
         self.p2_round_points = 0
         self.cards_played = [] # Combination of both players cards played
         self.table_points = 0 
-        self.go_list = [] # Frequency of "Player 1 Go" or frequency of "Player 2 Go" cannot exceed 1. When one of them does, it resets.
+        self.go_list = [] # Frequency of "Player 1 Go" or frequency of "Player 2 Go" cannot exceed 1. 
         self.scoring = Scoring()
         
     def play(self):
         while self.has_cards():
             print(f"{self.p1.name}'s points = {self.p1_round_points} | Computer's points = {self.p2_round_points}")
-            self.player_turn()
-            self.computer_turn()
-            self.switch_turns()
+            if self.turn == self.p1:
+                self.player_turn()
+                self.computer_turn()
+                self.switch_turns()
+            else:
+                self.computer_turn()
+                self.player_turn()
+                self.switch_turns()
         
         if len(self.p2.hand.cards) == 0 and len(self.p1.hand.cards) == 0:
             self.end_round()
@@ -76,7 +81,7 @@ class Round:
         else:
             self.go_list.append("Player 1 Go")
             print(f"{self.p1.name} cannot play. Go!")
-            print("-------------")
+            input("-------------")
 
     def computer_turn(self):
         self.check_go_list()
@@ -117,6 +122,7 @@ class Round:
         for _ in self.go_list:
             if "Player 1 Go" in self.go_list and "Player 2 Go" in self.go_list:
                 print("Neither players can go.")
+                input("-------------")
                 self.reset_table()
                 self.go_list = []
             else:
