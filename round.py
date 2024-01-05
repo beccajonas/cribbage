@@ -22,7 +22,7 @@ class Round:
         
     def play(self):
         while self.has_cards():
-            print(f"{self.p1.name}'s points = {self.p1_round_points} | Computer's points = {self.p2_round_points}")
+            print(colored(f"{self.p1.name}'s score = {self.p1_round_points} | Computer score = {self.p2_round_points}", "green"))
             if self.turn == self.p1:
                 self.player_turn()
                 self.computer_turn()
@@ -90,7 +90,7 @@ class Round:
         self.check_go_list()
 
         if self.table_points == 31:
-            print(colored(f"31! + 1 point for {self.p1.name}.", "green", attrs=['bold']))
+            print(colored(f"{self.p1.name}'s score = {self.p1_round_points} | Computer score = {self.p2_round_points}", "green"))
             self.p1_round_points += 1
             self.table_points = 0
             self.switch_turns()
@@ -112,7 +112,7 @@ class Round:
                 print(f"{self.p2.name} plays {chosen_card}.")
             # Display the updated game state
             self.display_cards_played()
-            print(f">> Table Points: {self.table_points}")
+            print(colored(f">> Table Points: {self.table_points}", "blue"))
             input("-------------")
 
         else:
@@ -177,7 +177,7 @@ class Round:
         print()
         self.p1_round_points += self.scoring.calc_points(self.p1_cards_played, self.p1)
         self.p2_round_points += self.scoring.calc_points(self.p2_cards_played, self.p2)
-        print(f"Your score = {self.p1_round_points} | Computer score = {self.p2_round_points}")
+        print(colored(f"{self.p1.name}'s score = {self.p1_round_points} | Computer score = {self.p2_round_points}", "green"))
         if self.p2_round_points == self.p1_round_points:
             winner = random.choice([self.p1, self.p2])
             print(f"It's a tie! Winner is... {winner}!")

@@ -1,21 +1,25 @@
-import time
+from termcolor import colored
 from deck import Deck
 from player import Player
 from crib import Crib
 from round import Round
-from scoring import Scoring
 from animations import Animations
 
 class Main:
     
     def __init__(self):
-        ascii_art = ''' ___   ___   ___
-|#  | |A  | |#  |
+        ascii_black = ''' ___   ___   ___
+|#  | |A  | |#  | 
 | # | | ♠ | | # |
 |__#| |__A| |__#|
 '''
+        ascii_red = ''' ___   ___   ___
+|#  | |A  | |#  | 
+| # | | ♥ | | # |
+|__#| |__A| |__#| 
+'''
         print("Welcome to Cribbage!")
-        print(ascii_art)
+        print(colored(ascii_red, "red") + colored(ascii_black, "black"))
         self.deck = Deck()
         self.p1 = Player.create_player()
         self.p2 = Player("Computer")
