@@ -43,11 +43,9 @@ class Round:
         if self.table_points == 31:
             print("31! + 1 point for computer.")
             self.p2_round_points += 1
-            time.sleep(2)
             self.table_points = 0
             self.switch_turns()  
-
-        print("-------------")
+            input("-------------")
         print(f"{self.p1.name}'s turn!")
         self.display_hand(self.p1)
         
@@ -86,9 +84,9 @@ class Round:
         if self.table_points == 31:
             print(f"31! + 1 point for {self.p1.name}.")
             self.p1_round_points += 1
-            time.sleep(2)
             self.table_points = 0
             self.switch_turns()
+            input("-------------")
         print(f"{self.p2.name}'s turn.")
 
         # Check if the computer has valid cards to play
@@ -107,12 +105,13 @@ class Round:
             # Display the updated game state
             self.display_cards_played()
             print(f">> Table Points: {self.table_points}")
+            input("-------------")
 
         else:
             # If the computer has no valid cards, it says "Go"
             self.go_list.append("Player 2 Go")
             print(f"Computer cannot play. Go!")
-            print("-------------")
+            input("-------------")
 
     def check_go_list(self):
         for _ in self.go_list:
