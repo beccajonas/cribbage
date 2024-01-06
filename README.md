@@ -71,4 +71,5 @@ To start the game, run the `main.py` file. The game will begin by shuffling the 
 
 <img width="856" alt="Calculate score" src="https://github.com/beccajonas/cribbage/assets/87732074/04998650-e790-4dc2-a414-ede1178d9f2b">
 
+
 Enjoy playing Cribbage!
