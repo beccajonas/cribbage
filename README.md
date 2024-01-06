@@ -66,9 +66,9 @@ To start the game, run the `main.py` file. The game will begin by shuffling the 
 3. During your turn, choose a card to play by entering the corresponding card number.
 4. The computer will then take its turn.
 5. The round continues until both players cannot play or run out of cards, keeping score when the table count of "31" is hit by a player.
-6. Points are calculated based on card combinations at the end of each round. This version currently supports scoring for pairs and combinations that equal 15.
+6. Points are calculated based on card combinations at the end of each round. This version currently supports scoring for pairs, combinations that equal 15 and 3-card runs.
 7. The game ends when a player reaches the maximum score or when you decide to exit.
 
-<img width="707" alt="Round over screen" src="https://github.com/beccajonas/cribbage/assets/87732074/66e7e1e8-70be-4c4f-acd5-7e5324866ed4">
+<img width="856" alt="Calculate score" src="https://github.com/beccajonas/cribbage/assets/87732074/04998650-e790-4dc2-a414-ede1178d9f2b">
 
 Enjoy playing Cribbage!
