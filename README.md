@@ -69,7 +69,6 @@ To start the game, run the `main.py` file. The game will begin by shuffling the 
 6. Points are calculated based on card combinations at the end of each round. This version currently supports scoring for pairs, combinations that equal 15 and 3-card runs.
 7. The game ends when a player reaches the maximum score or when you decide to exit.
 
-<img width="856" alt="Calculate score" src="https://github.com/beccajonas/cribbage/assets/87732074/04998650-e790-4dc2-a414-ede1178d9f2b">
-
+<img width="794" alt="Final score" src="https://github.com/beccajonas/cribbage/assets/87732074/8068f18b-ce72-49d0-9803-5bdb7fb1e0be">
 
 Enjoy playing Cribbage!
