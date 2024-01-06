@@ -31,3 +31,10 @@ class TestScoring:
         scoring = Scoring()
         result = scoring.calc_points(card_list, player)
         assert result == 0, f"Expected result: 0, Actual result: {result} | No pairs or combinations that equal 15."
+
+    def test_3_card_run(self):
+        card_list = [Card(2, "♥", 2), Card("A", "♦", 1), Card(3, "♣", 3), Card("K", "♠", 10)]
+        player = Player("Player")
+        scoring = Scoring()
+        result = scoring.calc_points(card_list, player)
+        assert result == 5, f"Expected result: 5, Actual result: {result} | ('A' ♦, 2 ♥, 3 ♣) for 3 points, 2 ♥ + 3 ♣ + 10 ♠ = 15."
